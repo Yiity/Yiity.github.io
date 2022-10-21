@@ -21,6 +21,9 @@
 		margin:20px;
 		text-align:center;
 	}
+	#answer input:hover{
+		color:blue;
+	}
   </style>
  </head>
  <body>
@@ -39,48 +42,79 @@
 	</div>
 
 	<script type="text/javascript">
-
-		/*生成两个随机数并放入题目中*/
-		var opNum1 = parseInt ( 10 * Math.random () );
-		var opNum2 = parseInt ( 10 * Math.random () );
-		var opNum1Dom = document.querySelector("input#opNum1");
-		var opNum2Dom = document.querySelector("input#opNum2");
-		opNum1Dom.value = opNum1 ;
-		opNum2Dom.value = opNum2 ;				
-		
 		/*将answer中的input抓取在answerDoms数组中*/
 		var answerDoms = document.querySelectorAll("div#answer input ");
-		/*for循环生成随机答案赋给answerABCD*/
-		for (i=0 ; i<4 ; i++ ){
-			var answer = parseInt ( 20 * Math.random () );
-			answerDoms[i].value = answer;
+		var opNum1Dom = document.querySelector("input#opNum1");
+		var opNum2Dom = document.querySelector("input#opNum2");
 
-			/*设置每个答案的点击结果，正确弹出Right，错误弹出Wrong*/
+		tryNext();
+
+		function tryNext(){
+			/*生成两个随机数并放入题目中*/
+			var opNum1 = parseInt (10 * Math.random ());
+			var opNum2 = parseInt (10 * Math.random ());
+			opNum1Dom.value = opNum1;
+			opNum2Dom.value = opNum2;						
+
+			/*for循环生成随机答案赋给answerABCD*/
+			//面对宏观问题，本例演示数组类的indexOf方法，带来的便利
+			function getIntegerArr(n){
+				function getRandInt(){
+	 				var integer = Math.floor(Math.random() * 20 ) ;
+					while (integer == opNum1 + opNum2)
+					{
+						integer = getRandInt();
+					}
+					return integer;						
+				};//end of getRanInt()	
+
+				var integerArr = [getRandInt()] ;	
+				for(var i=1; i < n ; i++){
+					var inte= getRandInt() ;	
+					while ( integerArr.indexOf(inte) !== -1 ) {
+					inte = getRandInt() ;   
+					}		
+				integerArr[i] = inte ;
+				}
+				return integerArr ;			
+			} //End of  function getIntegerArr(n)
+
+		var random = (getIntegerArr(4));
+		for (var i=0 ; i<4 ; i++ ){
+			answerDoms[i].value = random[i];
+		}		
+
+		for (var i=0 ; i<4 ; i++ ){
+			/*设置每个答案的点击结果，正确弹出Right，错误弹出Wrong*/		
 			answerDoms[i].onclick = function(){
 				var right = opNum1 + opNum2;
 				var sel = parseInt(this.value);
 				if (sel == right)
 				{
-					alert("Right!")
+					alert("Right!");
+					tryNext();
 				} else{
-					alert("Wrong.")
+					alert("Wrong! Please try again.");
 				}
-			}
+			};
 		}			
 		
+
 		/*使正确答案在ABCD中随机显示*/
-		var ram = parseInt ( 3 * Math.random () );
+		var ram = parseInt (4 * Math.random ());
 		if (ram == 0){
-			answerDoms[0].value = opNum1 + opNum2 ;
+			answerDoms[0].value = opNum1 + opNum2;
 		}else if(ram == 1){
-			answerDoms[1].value = opNum1 + opNum2 ;	
+			answerDoms[1].value = opNum1 + opNum2;	
 		}else if(ram == 2){
-			answerDoms[2].value = opNum1 + opNum2 ;
+			answerDoms[2].value = opNum1 + opNum2;
 		}else if(ram == 3){
-			answerDoms[3].value = opNum1 + opNum2 ;
+			answerDoms[3].value = opNum1 + opNum2;
 		}	
 
+	} ;//tryNext()结束
 
+	
 	</script>
 
  </body>
