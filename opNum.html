@@ -15,14 +15,17 @@
 		font-size:2em;
 	}
 	input{
-		width:50px;
-		height:40px;
-		font-size:30px;
+		width:2em;
+		height:auto;
+		font-size:1em;
 		margin:20px;
-		text-align:center;
+		text-align:center;		
 	}
 	#answer input:hover{
 		color:blue;
+	}
+	#next input{
+		width:4em;
 	}
   </style>
  </head>
@@ -39,6 +42,12 @@
 		B. <input type = "button" id = "answerB" value = "">
 		C. <input type = "button" id = "answerC" value = "">
 		D. <input type = "button" id = "answerD" value = "">
+	</div>	
+	<div id = >
+		<h2 id = "encourage">！点击开始按钮开始答题吧！</h2>
+	</div>
+	<div id="next"  onclick = "tryNext()">
+		<input type = "button" id = "nextBtn" value = "开始">
 	</div>
 
 	<script type="text/javascript">
@@ -46,76 +55,82 @@
 		var answerDoms = document.querySelectorAll("div#answer input ");
 		var opNum1Dom = document.querySelector("input#opNum1");
 		var opNum2Dom = document.querySelector("input#opNum2");
-
-		tryNext();
+		var nextDom = document.querySelector("input#nextBtn");
+		var encourageDom = document.querySelector("h2") ;
 
 		function tryNext(){
+			nextDom.value = "下一题";
+			encourageDom.textContent = "请选择正确答案";
+
 			/*生成两个随机数并放入题目中*/
 			var opNum1 = parseInt (10 * Math.random ());
 			var opNum2 = parseInt (10 * Math.random ());
 			opNum1Dom.value = opNum1;
-			opNum2Dom.value = opNum2;						
+			opNum2Dom.value = opNum2;
+			
+			/*将随机答案赋给answerABCD*/
+			var randomArr = (getIntegerArr(4)); 				
+			for (var i=0 ; i<4 ; i++ ){
+				answerDoms[i].value = randomArr[i];
+			}
 
-			/*for循环生成随机答案赋给answerABCD*/
-			//面对宏观问题，本例演示数组类的indexOf方法，带来的便利
+
+			/*函数功能：获取值为20以内整数且不重复数组，其长度为n*/
 			function getIntegerArr(n){
-				function getRandInt(){
+				function getRandom(){
 	 				var integer = Math.floor(Math.random() * 20 ) ;
+					//避免与正确答案重复导致的选项重复
 					while (integer == opNum1 + opNum2)
 					{
-						integer = getRandInt();
+						integer = getRandom();
 					}
-					return integer;						
-				};//end of getRanInt()	
+					return integer;	//返回产生的随机数					
+				};//end of getRandom()	
 
-				var integerArr = [getRandInt()] ;	
+				var integerArr = [getRandom()] ;	//往数组传入第一个数
 				for(var i=1; i < n ; i++){
-					var inte= getRandInt() ;	
-					while ( integerArr.indexOf(inte) !== -1 ) {
-					inte = getRandInt() ;   
+					var integer = getRandom() ;	
+					//若此随机数在数组中已存在，则继续获取
+					while ( integerArr.indexOf(integer) !== -1 ) { 
+					integer = getRandom() ;   
 					}		
-				integerArr[i] = inte ;
+				integerArr[i] = integer ; //得到的不重复的值传入数组
 				}
-				return integerArr ;			
+				return integerArr ;	//返回数组		
 			} //End of  function getIntegerArr(n)
 
-		var random = (getIntegerArr(4));
-		for (var i=0 ; i<4 ; i++ ){
-			answerDoms[i].value = random[i];
-		}		
-
-		for (var i=0 ; i<4 ; i++ ){
-			/*设置每个答案的点击结果，正确弹出Right，错误弹出Wrong*/		
-			answerDoms[i].onclick = function(){
-				var right = opNum1 + opNum2;
-				var sel = parseInt(this.value);
-				if (sel == right)
-				{
-					alert("Right!");
-					tryNext();
-				} else{
-					alert("Wrong! Please try again.");
-				}
-			};
-		}			
 		
 
-		/*使正确答案在ABCD中随机显示*/
-		var ram = parseInt (4 * Math.random ());
-		if (ram == 0){
-			answerDoms[0].value = opNum1 + opNum2;
-		}else if(ram == 1){
-			answerDoms[1].value = opNum1 + opNum2;	
-		}else if(ram == 2){
-			answerDoms[2].value = opNum1 + opNum2;
-		}else if(ram == 3){
-			answerDoms[3].value = opNum1 + opNum2;
-		}	
+			for (var i=0 ; i<4 ; i++ ){
+				/*设置每个答案的点击结果，*/		
+				answerDoms[i].onclick = function(){
+					var right = opNum1 + opNum2;
+					var sel = parseInt(this.value);
+					if (sel == right)
+					{
+						encourageDom.textContent = "！恭喜你答对啦！";
+					
+					} else{
+						encourageDom.textContent = "答错啦！不要灰心，再试一次吧";
+					}
+				};
+			}			
+		
 
-	} ;//tryNext()结束
+			/*使正确答案在ABCD中随机显示*/
+			var ram = parseInt (4 * Math.random ());
+			if (ram == 0){
+				answerDoms[0].value = opNum1 + opNum2;
+			}else if(ram == 1){
+				answerDoms[1].value = opNum1 + opNum2;	
+			}else if(ram == 2){
+				answerDoms[2].value = opNum1 + opNum2;
+			}else if(ram == 3){
+				answerDoms[3].value = opNum1 + opNum2;
+			}	
 
-	
+		} ;//tryNext()结束
+
 	</script>
-
  </body>
 </html>
