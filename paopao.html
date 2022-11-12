@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Author" content="">
+  <title>戳泡泡</title>
+
+  <style type="text/css">
+	div{
+		width:200px;
+		height:200px;
+		border-radius:50%;
+		text-align:center;
+		padding:50px;
+		border:1px solid rgba(20,20,20,0.1);
+		background-color:rgba(20,20,20,0.05);
+		position:absolute;
+		font-size:200%;
+		
+	}
+  </style>
+
+ </head>
+ <body>
+
+ <script type="text/javascript">
+ <!--
+	for( var i=0; i<7; i++ ){
+		var divDom = document.createElement('div') ;		
+		//divDom.textContent = "我是泡泡" ;
+		divPositionRandom( divDom ) ;
+		divDom.onclick = function(){
+			var x = Math.floor( Math.random() * (window.innerWidth * 0.75)  ) ;
+			var y = Math.floor( Math.random() * (window.innerHeight * 0.6)  ) ;
+			this.style.left = x + "px" ;	
+			this.style.top = y + "px" ;
+		}
+		document.body.appendChild(divDom) ;
+	}
+
+	function divPositionRandom( dom ){
+		var x = Math.floor( Math.random() * (window.innerWidth * 0.75)  ) ;
+		var y = Math.floor( Math.random() * (window.innerHeight * 0.6) ) ;
+		dom.style.left = x + "px" ;	
+		dom.style.top = y + "px" ;
+	}//End of divPositionRandom()
+ //-->
+ </script>
+  
+ </body>
+</html>

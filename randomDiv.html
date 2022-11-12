@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Author" content="">
+  <title>神奇的漂浮灵</title>
+
+  <style type="text/css">
+
+	div{
+		width:15%;		
+		border-radius:50%;
+		text-align:center;
+		padding-top:6.5%;
+		padding-bottom:6.5%;
+		background-color:rgba(200,150,100,0.1);
+		position:absolute;
+		transition:all 1s;
+	}
+  </style>
+
+ </head>
+ <body>
+
+ <script type="text/javascript">
+ <!--
+	for( var i=0; i<30; i++ ){
+		var divDom = document.createElement('div') ;		
+		divDom.textContent = "我是一只漂浮灵" ;
+		divPositionRandom( divDom ) ;
+		divDom.onmouseover = function(){
+			var x = Math.floor( Math.random() * (window.innerWidth * 0.85) ) ;
+			var y = Math.floor( Math.random() * (window.innerHeight * 0.7) ) ;
+			this.style.left = x + "px" ;	
+			this.style.top = y + "px" ;
+		}
+		document.body.appendChild(divDom) ;
+	}//End of for loop
+
+	function divPositionRandom( dom ){
+		var x = Math.floor( Math.random() * (window.innerWidth * 0.85) ) ;
+		var y = Math.floor( Math.random() * (window.innerHeight * 0.7) ) ;
+		dom.style.left = x + "px" ;	
+		dom.style.top = y + "px" ;
+	}//End of divPositionRandom()
+ //-->
+ </script>
+  
+ </body>
+</html>
